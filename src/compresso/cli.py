@@ -11,6 +11,13 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="compresso.cli", description=__doc__)
     p.add_argument("dump", help="raw memory dump, read as 64-byte lines")
     p.add_argument("--algo", choices=["bpc", "bdi", "stub"], default="bpc")
+    p.add_argument(
+        "--word-bits",
+        type=int,
+        choices=[8, 16, 32, 64],
+        default=None,
+        help="override BPC symbol width (default: Compresso's 16; original BPC uses 32)",
+    )
     p.add_argument("--out", default="results/", help="output directory for CSV stats")
     p.parse_args(argv)
     print("compresso.cli: not implemented yet (Phase 6)", file=sys.stderr)

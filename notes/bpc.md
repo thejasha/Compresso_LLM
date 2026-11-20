@@ -56,30 +56,6 @@ The paper uses 128 B GPU blocks. Compresso uses 64 B CPU cache lines ("decreasin
 - The word size is a parameter: `BPCConfig.word_bits` (Compresso default 16) and `--word-bits` on the CLI. See **Parameters** below.
 - Compresso also runs BPC **with and without** the DBX transform in parallel and keeps the smaller result (§1). That's a separate step from the word size.
 
-## Mapping onto `src/compresso/bpc.py`
-
-Early sketch for `word_bits=32` only. The real stubs in `bpc.py` (`_words`, `_delta`, `_bit_plane`, `_xor`) take a `cfg` and read their sizes from it (`cfg.n_words`, `cfg.delta_bits`, `cfg.plane_bits`) instead of hard-coding them.
-
-```python
-WORD_BITS = 32
-N_WORDS   = 64 * 8 // WORD_BITS          # 16
-DELTA_BITS = WORD_BITS + 1               # 33
-MASK33 = (1 << DELTA_BITS) - 1
-
-def _words(line):        # 64 B -> 16 × u32 (little-endian; document it)
-    return [int.from_bytes(line[i:i+4], "little") for i in range(0, 64, 4)]
-
-def _deltas(words):      # -> base, 15 deltas as 33-bit two's complement
-    return words[0], [(words[i] - words[i-1]) & MASK33 for i in range(1, N_WORDS)]
-
-def _bitplanes(deltas):  # -> DBP[0..32], each an (N_WORDS-1)-bit int
-    # bit j of DBP[k] = bit k of deltas[j]  (pick j's bit order and keep it fixed)
-    return [sum(((d >> k) & 1) << j for j, d in enumerate(deltas)) for k in range(DELTA_BITS)]
-
-def _dbx(dbp):           # -> DBX[0..31] plus DBP[32] kept unchanged
-    return [dbp[k] ^ dbp[k+1] for k in range(DELTA_BITS - 1)], dbp[DELTA_BITS - 1]
-```
-
 Test each step by inverting it: `_bitplanes` and its transpose back, `_dbx` and its undo, `_deltas` and its prefix sum. A round-trip test on each step catches off-by-one and bit-order mistakes before the encoder exists.
 
 ## BPC overview: Transform → Encode (Fig. 3a)

@@ -6,7 +6,7 @@ RUFF    := $(VENV)/bin/ruff
 DUMP    ?= data/sample.bin
 ALGO    ?= bpc
 
-.PHONY: help setup test test-fast lint format run validate bench clean distclean
+.PHONY: help setup test test-fast lint format run validate bench clean distclean sim-setup sim-hello
 
 help:
 	@echo "make setup      create .venv and install the package + dev tools"
@@ -19,6 +19,8 @@ help:
 	@echo "make bench      time the compressor on DUMP"
 	@echo "make clean      remove caches and results"
 	@echo "make distclean  clean + remove .venv"
+	@echo "make sim-setup  clone and build gem5 (Linux). GEM5_JOBS=2 by default"
+	@echo "make sim-hello  run gem5 hello-world"
 
 setup: $(VENV)/.installed
 
@@ -56,3 +58,9 @@ clean:
 
 distclean: clean
 	rm -rf $(VENV) src/*.egg-info
+
+sim-setup:
+	bash sim/setup.sh
+
+sim-hello:
+	bash sim/run-hello.sh

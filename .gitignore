@@ -18,3 +18,10 @@ results/*
 .DS_Store
 .vscode/
 .idea/
+
+# Local project overview; never commit
+notes/local.md
+
+# gem5 checkout and run output, created on each machine by sim/setup.sh
+sim/gem5/
+sim/runs/

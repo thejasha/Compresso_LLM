@@ -7,9 +7,8 @@ def test_constants():
     assert compresso.PAGE_BYTES % compresso.LINE_BYTES == 0
 
 
-def test_cli_parses_args():
-    # Stub CLI exits non-zero until Phase 6, but must parse arguments.
-    assert cli.main(["data/sample.bin", "--algo", "bpc"]) == 1
+def test_cli_missing_dump_is_an_error(tmp_path):
+    assert cli.main([str(tmp_path / "missing.bin"), "--algo", "bpc"]) == 2
 
 
 def test_bpc_config_defaults_are_compresso():
@@ -37,5 +36,7 @@ def test_binned_bytes():
     assert bpc.binned_bytes(nz, 600) == 64  # didn't compress -> stored raw
 
 
-def test_cli_word_bits():
-    assert cli.main(["data/sample.bin", "--word-bits", "32"]) == 1
+def test_cli_word_bits(tmp_path):
+    dump = tmp_path / "d.bin"
+    dump.write_bytes(bytes(range(64)) * 4)
+    assert cli.main([str(dump), "--word-bits", "32", "--out", str(tmp_path), "-q"]) == 0

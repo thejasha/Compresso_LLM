@@ -26,7 +26,7 @@ A finished hello run prints `Hello world` and writes `sim/runs/hello/stats.txt`.
 | Variable | Default | Use |
 |---|---|---|
 | `GEM5_JOBS` | `2` | Compile jobs. Raise it on CAE if the machine has the memory. |
-| `GEM5_ROOT` | `sim/gem5` | Where the gem5 source lives. Point this at scratch space if a CAE home directory is too small. |
+| `GEM5_ROOT` | `$HOME/gem5` | Where the gem5 source lives. This stays on the Linux disk, including under WSL, so the build is not on the Windows drive. |
 | `GEM5_BRANCH` | `stable` | gem5 branch to clone. |
 
 Use the same `GEM5_ROOT` for `setup.sh` and `run-hello.sh`.

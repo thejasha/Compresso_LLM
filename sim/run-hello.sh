@@ -3,7 +3,8 @@
 set -euo pipefail
 
 SIM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-GEM5_ROOT="${GEM5_ROOT:-$SIM_DIR/gem5}"
+export PATH="$HOME/.local/bin:$PATH"
+GEM5_ROOT="${GEM5_ROOT:-$HOME/gem5}"
 GEM5="$GEM5_ROOT/build/X86/gem5.opt"
 CONFIG="$GEM5_ROOT/configs/learning_gem5/part1/simple.py"
 OUTDIR="$SIM_DIR/runs/hello"

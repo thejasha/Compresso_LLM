@@ -5,7 +5,8 @@
 set -euo pipefail
 
 SIM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-GEM5_ROOT="${GEM5_ROOT:-$SIM_DIR/gem5}"
+export PATH="$HOME/.local/bin:$PATH"
+GEM5_ROOT="${GEM5_ROOT:-$HOME/gem5}"
 GEM5_JOBS="${GEM5_JOBS:-2}"
 GEM5_BRANCH="${GEM5_BRANCH:-stable}"
 

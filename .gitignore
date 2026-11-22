@@ -9,6 +9,7 @@ __pycache__/
 # Large data: never commit dumps or models
 data/*
 !data/.gitkeep
+!data/README.md
 results/*
 !results/.gitkeep
 *.bin

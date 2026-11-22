@@ -5,6 +5,7 @@ PIP     := $(VENV)/bin/pip
 RUFF    := $(VENV)/bin/ruff
 DUMP    ?= data/sample.bin
 ALGO    ?= bpc
+ARGS    ?=
 
 .PHONY: help setup test test-fast lint format run validate bench clean distclean
 
@@ -14,7 +15,7 @@ help:
 	@echo "make test-fast  run tests, stop at first failure"
 	@echo "make lint       ruff check"
 	@echo "make format     ruff format"
-	@echo "make run        compress DUMP=<file.bin> with ALGO=<bpc|bdi|stub>"
+	@echo "make run        compress DUMP=<file.bin> with ALGO=<bpc|bdi|stub>, extra flags in ARGS=\"...\""
 	@echo "make validate   compare against paper-style results"
 	@echo "make bench      time the compressor on DUMP"
 	@echo "make clean      remove caches and results"
@@ -41,8 +42,7 @@ format: setup
 	$(RUFF) format src tests scripts
 
 run: setup
-	mkdir -p results
-	$(PY) -m compresso.cli $(DUMP) --algo $(ALGO) --out results/
+	$(PY) -m compresso.cli $(DUMP) --algo $(ALGO) --out results/ $(ARGS)
 
 validate: setup
 	$(PY) scripts/validate_vs_paper.py

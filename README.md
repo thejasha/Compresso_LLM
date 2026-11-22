@@ -23,14 +23,3 @@ flowchart TD
     H --> J[Final Report & Final Presentation]
     I --> J
 ```
-
-## Hardware (gem5)
-
-On the laptop's Ubuntu or a CAE Linux machine, from this repo:
-
-```bash
-bash sim/setup.sh
-bash sim/run-hello.sh
-```
-
-`sim/setup.sh` downloads and builds gem5 on that machine. The source is not committed. Details are in `sim/README.md`.

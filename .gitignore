@@ -15,6 +15,7 @@ data/traces/**
 !data/traces/**/trace.json
 results/*
 !results/.gitkeep
+!results/*.md
 *.bin
 *.gguf
 

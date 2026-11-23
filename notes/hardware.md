@@ -28,12 +28,12 @@ LLM dumps stay with the LLM / capacity track. Full llama.cpp inside gem5 is usua
 
 ## Plan (depth 2)
 
-**Before progress report (half we own alone)**
+**Before progress report (half we own alone)** — done for a first cut
 
 1. Writeback recorder: emit the three trace files from a small gem5 run
 2. Tiny Python reader that parses `writebacks.bin`
 3. Short note: gem5 config vs Compresso Table III
-4. Optional: stub replay (fake compressed sizes) to test the pipeline
+4. Stub replay (fake compressed sizes) to test the pipeline
 
 **After progress report / when group mates are ready**
 
@@ -61,8 +61,8 @@ LLM dumps stay with the LLM / capacity track. Full llama.cpp inside gem5 is usua
 - [x] Small write-heavy test program for gem5 (SE mode) — `sim/workloads/write_array.c`
 - [x] Record DRAM writes → `data/traces/write_array/` via hook + gem5 (152 writeback records on Nov 22; `bash sim/run-writebacks.sh` to reproduce)
 - [x] Python reader for `writebacks.bin` — `sim/read_writebacks.py` (80 B: tick, addr, 64 B data)
-- [ ] Document gem5 config vs Compresso Table III
-- [ ] Optional stub replay to prove the file pipeline end-to-end
+- [x] Document gem5 config vs Compresso Table III — `notes/table3-config.md`
+- [x] Stub replay on the real trace — `sim/stub_replay.py` → `results/stub_replay_write_array.md`
 
 ### After progress report
 
@@ -101,7 +101,9 @@ bash sim/run-hello.sh
 - gem5 builds and hello-world works on the laptop
 - Scripts in `sim/` for laptop and CAE
 - First writeback trace from `write_array`: 152 records in `data/traces/write_array/` (local; gitignored bins)
-- Next: Table III config note; optional stub replay; longer runs later
+- Config vs Compresso Table III documented in `notes/table3-config.md` (64 B lines match; caches/CPU smaller on purpose)
+- Stub replay proves control vs Compresso-style comparison on that trace (`sim/stub_replay.py`)
+- Next after progress report: longer runs, real compressor replay, closer-to-Table-III configs on CAE
 
 **Final report (fill as results appear)**
 
@@ -118,3 +120,4 @@ bash sim/run-hello.sh
 | 2026-11-22 | Clarified control vs Compresso; first half without LLM / without group compressor; this note created |
 | 2026-11-22 | Started writeback capture: write_array workload, gem5 AbstractMemory hook, run script, Python reader |
 | 2026-11-22 | First real trace: `data/traces/write_array/` with 152 writebacks + 32 MiB snapshot |
+| 2026-11-23 | Table III comparison note; stub replay on write_array trace |

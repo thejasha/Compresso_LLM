@@ -22,6 +22,14 @@ python3 sim/read_writebacks.py data/traces/write_array/writebacks.bin
 
 Those files stay under `data/` and are gitignored.
 
+Config vs paper: [`notes/table3-config.md`](../notes/table3-config.md).
+
+Stub replay (fake sizes, no real BPC yet):
+
+```bash
+python3 sim/stub_replay.py data/traces/write_array/writebacks.bin
+```
+
 ## Pull and run
 
 ```bash

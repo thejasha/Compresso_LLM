@@ -6,7 +6,7 @@ RUFF    := $(VENV)/bin/ruff
 DUMP    ?= data/sample.bin
 ALGO    ?= bpc
 
-.PHONY: help setup test test-fast lint format run validate bench clean distclean sim-setup sim-hello sim-writebacks
+.PHONY: help setup test test-fast lint format run validate bench clean distclean sim-setup sim-hello sim-writebacks sim-stub-replay
 
 help:
 	@echo "make setup      create .venv and install the package + dev tools"
@@ -21,7 +21,8 @@ help:
 	@echo "make distclean  clean + remove .venv"
 	@echo "make sim-setup      clone and build gem5 (Linux). GEM5_JOBS=2 by default"
 	@echo "make sim-hello      run gem5 hello-world"
-	@echo "make sim-writebacks record DRAM writebacks from write_array into data/traces/"
+	@echo "make sim-writebacks   record DRAM writebacks from write_array into data/traces/"
+	@echo "make sim-stub-replay  fake control vs Compresso replay on TRACE=data/traces/write_array/writebacks.bin"
 
 setup: $(VENV)/.installed
 
@@ -68,3 +69,8 @@ sim-hello:
 
 sim-writebacks:
 	bash sim/run-writebacks.sh
+
+TRACE ?= data/traces/write_array/writebacks.bin
+
+sim-stub-replay:
+	$(PYTHON) sim/stub_replay.py $(TRACE)

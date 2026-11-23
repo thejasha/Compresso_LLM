@@ -58,9 +58,9 @@ LLM dumps stay with the LLM / capacity track. Full llama.cpp inside gem5 is usua
 
 ### Before progress report
 
-- [ ] Small write-heavy test program for gem5 (SE mode)
-- [ ] Record LLC writebacks → `data/traces/NAME/{snapshot.bin,writebacks.bin,trace.json}`
-- [ ] Python reader for `writebacks.bin` (document the 80 B record layout)
+- [x] Small write-heavy test program for gem5 (SE mode) — `sim/workloads/write_array.c`
+- [x] Record DRAM writes → `data/traces/write_array/` via hook + gem5 (152 writeback records on Nov 22; `bash sim/run-writebacks.sh` to reproduce)
+- [x] Python reader for `writebacks.bin` — `sim/read_writebacks.py` (80 B: tick, addr, 64 B data)
 - [ ] Document gem5 config vs Compresso Table III
 - [ ] Optional stub replay to prove the file pipeline end-to-end
 
@@ -100,7 +100,8 @@ bash sim/run-hello.sh
 - Hardware goal: writeback traces for Compresso traffic, not only capacity
 - gem5 builds and hello-world works on the laptop
 - Scripts in `sim/` for laptop and CAE
-- Next / in progress: first writeback trace from a small program
+- First writeback trace from `write_array`: 152 records in `data/traces/write_array/` (local; gitignored bins)
+- Next: Table III config note; optional stub replay; longer runs later
 
 **Final report (fill as results appear)**
 
@@ -115,3 +116,5 @@ bash sim/run-hello.sh
 |---|---|
 | 2026-11-21 | Direction, `sim/` scripts, gem5 build, hello-world OK, branch `sim/gem5-hello` |
 | 2026-11-22 | Clarified control vs Compresso; first half without LLM / without group compressor; this note created |
+| 2026-11-22 | Started writeback capture: write_array workload, gem5 AbstractMemory hook, run script, Python reader |
+| 2026-11-22 | First real trace: `data/traces/write_array/` with 152 writebacks + 32 MiB snapshot |

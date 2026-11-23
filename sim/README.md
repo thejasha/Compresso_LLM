@@ -4,7 +4,23 @@ These scripts are the hardware side of the project. They are the same on this la
 
 Progress for reports: [`notes/hardware.md`](../notes/hardware.md).
 
-What this step does: build gem5 and run its hello-world program. The recording of RAM updates comes after this run works.
+## Commands
+
+```bash
+bash sim/setup.sh          # clone/build gem5 once
+bash sim/run-hello.sh      # sanity check
+bash sim/apply-writeback-hook.sh   # add DRAM write recorder into local gem5
+bash sim/run-writebacks.sh # write-heavy program -> data/traces/write_array/
+python3 sim/read_writebacks.py data/traces/write_array/writebacks.bin
+```
+
+`run-writebacks.sh` applies the hook, rebuilds gem5 if needed, runs `write_array`, and writes:
+
+- `snapshot.bin` — memory when the first DRAM write happens
+- `writebacks.bin` — 80 B records: tick, 64 B-aligned phys addr, 64 B data
+- `trace.json` — config / workload metadata
+
+Those files stay under `data/` and are gitignored.
 
 ## Pull and run
 

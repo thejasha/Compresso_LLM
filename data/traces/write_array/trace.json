@@ -1,0 +1,23 @@
+{
+  "simulator": "gem5",
+  "simulator_version": "26.0.0.0",
+  "workload": "write_array",
+  "workload_source": "sim/workloads/write_array.c",
+  "config": "sim/configs/writeback_se.py",
+  "cpu": "X86TimingSimpleCPU",
+  "clock": "1GHz",
+  "l1i": "16KiB",
+  "l1d": "16KiB",
+  "l2": "64KiB",
+  "cache_line_bytes": 64,
+  "mem": "DDR3_1600_8x8",
+  "mem_range": "32MiB",
+  "snapshot_file": "snapshot.bin",
+  "writebacks_file": "writebacks.bin",
+  "writeback_record_bytes": 80,
+  "writeback_fields": ["u64 tick", "u64 phys_addr", "64 B data"],
+  "note": "tick is gem5 curTick(), not a CPU cycle counter",
+  "snapshot_bytes": 33554432,
+  "writeback_bytes": 12160,
+  "writeback_records": 152
+}

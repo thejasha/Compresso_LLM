@@ -9,6 +9,10 @@ __pycache__/
 # Large data: never commit dumps or models
 data/*
 !data/.gitkeep
+!data/traces/
+data/traces/**
+!data/traces/**/
+!data/traces/**/trace.json
 results/*
 !results/.gitkeep
 *.bin
@@ -25,3 +29,7 @@ notes/local.md
 # gem5 checkout and run output, created on each machine by sim/setup.sh
 sim/gem5/
 sim/runs/
+
+# Compiled SE workloads (sources stay tracked)
+sim/workloads/write_array
+sim/workloads/*.o

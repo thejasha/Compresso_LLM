@@ -2,6 +2,8 @@
 
 These scripts are the hardware side of the project. They are the same on this laptop and on a CAE Linux machine. gem5 itself is not in git. `setup.sh` downloads and builds it on the machine you are sitting at.
 
+Progress for reports: [`notes/hardware.md`](../notes/hardware.md).
+
 What this step does: build gem5 and run its hello-world program. The recording of RAM updates comes after this run works.
 
 ## Pull and run
